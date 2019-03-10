@@ -1,0 +1,2 @@
+sudo apt-get install python3-serial python3-opengl python3-scipy python3-matplotlib
+sudo pip3 install piglet

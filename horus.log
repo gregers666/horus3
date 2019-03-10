@@ -1,0 +1,421 @@
+2019-03-10 19:07:00.278 - Start application Horus3 0.2rc1
+2019-03-10 19:07:05.142 - Connecting camera 0
+2019-03-10 19:07:06.028 -  Done
+2019-03-10 19:07:06.029 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:07:07.726 - motor speed set
+2019-03-10 19:07:07.727 - timeout set
+2019-03-10 19:07:07.727 - connect set to True
+2019-03-10 19:07:07.727 - Setting current position as origin
+2019-03-10 19:07:07.767 - Origin set - Horus 0.2 connection done
+2019-03-10 19:07:10.282 - Start scan
+2019-03-10 19:07:16.502 - Start scan
+2019-03-10 19:07:22.477 - Disconnecting camera 0
+2019-03-10 19:07:22.510 -  Done
+2019-03-10 19:07:22.510 - Disconnecting board /dev/ttyUSB0
+2019-03-10 19:07:22.514 -  Done
+2019-03-10 19:09:00.112 - Start application Horus3 0.2rc1
+2019-03-10 19:09:03.622 - Connecting camera 0
+2019-03-10 19:09:04.625 -  Done
+2019-03-10 19:09:04.625 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:09:06.323 - motor speed set
+2019-03-10 19:09:06.323 - timeout set
+2019-03-10 19:09:06.324 - connect set to True
+2019-03-10 19:09:06.324 - Setting current position as origin
+2019-03-10 19:09:06.364 - Origin set - Horus 0.2 connection done
+2019-03-10 19:09:11.564 - Start scan
+2019-03-10 19:09:55.725 - Start application Horus3 0.2rc1
+2019-03-10 19:09:59.634 - Connecting camera 0
+2019-03-10 19:10:00.511 -  Done
+2019-03-10 19:10:00.511 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:10:02.208 - motor speed set
+2019-03-10 19:10:02.209 - timeout set
+2019-03-10 19:10:02.209 - connect set to True
+2019-03-10 19:10:02.209 - Setting current position as origin
+2019-03-10 19:10:02.249 - Origin set - Horus 0.2 connection done
+2019-03-10 19:10:03.339 - Disconnecting camera 0
+2019-03-10 19:10:03.345 -  Done
+2019-03-10 19:10:03.345 - Disconnecting board /dev/ttyUSB0
+2019-03-10 19:10:03.349 -  Done
+2019-03-10 19:11:10.854 - Start application Horus3 0.2rc1
+2019-03-10 19:11:14.428 - Connecting camera 0
+2019-03-10 19:11:15.220 -  Done
+2019-03-10 19:11:15.221 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:11:16.918 - motor speed set
+2019-03-10 19:11:16.918 - timeout set
+2019-03-10 19:11:16.919 - connect set to True
+2019-03-10 19:11:16.919 - Setting current position as origin
+2019-03-10 19:11:16.959 - Origin set - Horus 0.2 connection done
+2019-03-10 19:11:18.167 - Start scan
+2019-03-10 19:11:26.750 - Disconnecting camera 0
+2019-03-10 19:11:26.787 -  Done
+2019-03-10 19:11:26.788 - Disconnecting board /dev/ttyUSB0
+2019-03-10 19:11:26.832 -  Done
+2019-03-10 19:11:35.698 - Start application Horus3 0.2rc1
+2019-03-10 19:11:40.683 - Connecting camera 0
+2019-03-10 19:11:41.561 -  Done
+2019-03-10 19:11:41.561 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:11:43.258 - motor speed set
+2019-03-10 19:11:43.259 - timeout set
+2019-03-10 19:11:43.259 - connect set to True
+2019-03-10 19:11:43.259 - Setting current position as origin
+2019-03-10 19:11:43.299 - Origin set - Horus 0.2 connection done
+2019-03-10 19:11:44.841 - Start scan
+2019-03-10 19:12:09.234 - Disconnecting camera 0
+2019-03-10 19:12:09.266 -  Done
+2019-03-10 19:12:09.266 - Disconnecting board /dev/ttyUSB0
+2019-03-10 19:12:09.271 -  Done
+2019-03-10 19:30:09.849 - Start application Horus3 0.2rc1
+2019-03-10 19:30:13.391 - Connecting camera 0
+2019-03-10 19:30:14.274 -  Done
+2019-03-10 19:30:14.274 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:30:15.972 - motor speed set
+2019-03-10 19:30:15.973 - timeout set
+2019-03-10 19:30:15.973 - connect set to True
+2019-03-10 19:30:15.973 - Setting current position as origin
+2019-03-10 19:30:16.013 - Origin set - Horus 0.2 connection done
+2019-03-10 19:30:16.466 - Start scan
+2019-03-10 19:33:50.953 - Start application Horus3 0.2rc1
+2019-03-10 19:33:54.554 - Connecting camera 0
+2019-03-10 19:33:55.433 -  Done
+2019-03-10 19:33:55.434 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:33:57.131 - motor speed set
+2019-03-10 19:33:57.131 - timeout set
+2019-03-10 19:33:57.133 - connect set to True
+2019-03-10 19:33:57.133 - Setting current position as origin
+2019-03-10 19:33:57.172 - Origin set - Horus 0.2 connection done
+2019-03-10 19:33:57.742 - Start scan
+2019-03-10 19:33:59.922 - Finish scan 0 %  Time 26' 02"
+2019-03-10 19:34:25.294 - Disconnecting camera 0
+2019-03-10 19:34:25.324 -  Done
+2019-03-10 19:34:25.325 - Disconnecting board /dev/ttyUSB0
+2019-03-10 19:34:25.330 -  Done
+2019-03-10 19:35:30.583 - Start application Horus3 0.2rc1
+2019-03-10 19:35:34.085 - Connecting camera 0
+2019-03-10 19:35:35.092 -  Done
+2019-03-10 19:35:35.092 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:35:36.790 - motor speed set
+2019-03-10 19:35:36.790 - timeout set
+2019-03-10 19:35:36.790 - connect set to True
+2019-03-10 19:35:36.791 - Setting current position as origin
+2019-03-10 19:35:36.829 - Origin set - Horus 0.2 connection done
+2019-03-10 19:35:38.040 - Start scan
+2019-03-10 19:35:40.259 - Finish scan 0 %  Time 59' 51"
+2019-03-10 19:38:33.014 - Start application Horus3 0.2rc1
+2019-03-10 19:38:36.800 - Connecting camera 0
+2019-03-10 19:38:37.675 -  Done
+2019-03-10 19:38:37.676 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:38:39.373 - motor speed set
+2019-03-10 19:38:39.373 - timeout set
+2019-03-10 19:38:39.373 - connect set to True
+2019-03-10 19:38:39.374 - Setting current position as origin
+2019-03-10 19:38:39.412 - Origin set - Horus 0.2 connection done
+2019-03-10 19:38:40.796 - Start scan
+2019-03-10 19:38:43.016 - Finish scan 0 %  Time 59' 50"
+2019-03-10 19:38:52.450 - Disconnecting camera 0
+2019-03-10 19:38:52.489 -  Done
+2019-03-10 19:38:52.489 - Disconnecting board /dev/ttyUSB0
+2019-03-10 19:38:52.494 -  Done
+2019-03-10 19:39:31.757 - Start application Horus3 0.2rc1
+2019-03-10 19:39:35.748 - Connecting camera 0
+2019-03-10 19:39:36.624 -  Done
+2019-03-10 19:39:36.624 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:39:38.322 - motor speed set
+2019-03-10 19:39:38.322 - timeout set
+2019-03-10 19:39:38.325 - connect set to True
+2019-03-10 19:39:38.326 - Setting current position as origin
+2019-03-10 19:39:38.366 - Origin set - Horus 0.2 connection done
+2019-03-10 19:39:42.372 - Start scan
+2019-03-10 19:39:44.590 - Finish scan 0 %  Time 59' 48"
+2019-03-10 19:41:21.896 - Start application Horus3 0.2rc1
+2019-03-10 19:41:25.987 - Connecting camera 0
+2019-03-10 19:41:26.872 -  Done
+2019-03-10 19:41:26.872 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:41:28.570 - motor speed set
+2019-03-10 19:41:28.570 - timeout set
+2019-03-10 19:41:28.571 - connect set to True
+2019-03-10 19:41:28.571 - Setting current position as origin
+2019-03-10 19:41:28.611 - Origin set - Horus 0.2 connection done
+2019-03-10 19:41:30.209 - Start scan
+2019-03-10 19:41:32.428 - Finish scan 0 %  Time 59' 50"
+2019-03-10 19:41:53.655 - Disconnecting camera 0
+2019-03-10 19:41:53.680 -  Done
+2019-03-10 19:41:53.680 - Disconnecting board /dev/ttyUSB0
+2019-03-10 19:41:53.684 -  Done
+2019-03-10 19:43:29.528 - Start application Horus3 0.2rc1
+2019-03-10 19:43:32.740 - Connecting camera 0
+2019-03-10 19:43:33.615 -  Done
+2019-03-10 19:43:33.616 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:43:35.313 - motor speed set
+2019-03-10 19:43:35.313 - timeout set
+2019-03-10 19:43:35.313 - connect set to True
+2019-03-10 19:43:35.313 - Setting current position as origin
+2019-03-10 19:43:35.353 - Origin set - Horus 0.2 connection done
+2019-03-10 19:43:42.857 - Start scan
+2019-03-10 19:43:45.078 - Finish scan 0 %  Time 59' 45"
+2019-03-10 19:44:35.371 - Disconnecting camera 0
+2019-03-10 19:44:35.405 -  Done
+2019-03-10 19:44:35.406 - Disconnecting board /dev/ttyUSB0
+2019-03-10 19:44:35.411 -  Done
+2019-03-10 19:46:41.054 - Start application Horus3 0.2rc1
+2019-03-10 19:46:44.362 - Connecting camera 0
+2019-03-10 19:46:45.243 -  Done
+2019-03-10 19:46:45.244 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:46:46.941 - motor speed set
+2019-03-10 19:46:46.941 - timeout set
+2019-03-10 19:46:46.942 - connect set to True
+2019-03-10 19:46:46.942 - Setting current position as origin
+2019-03-10 19:46:46.981 - Origin set - Horus 0.2 connection done
+2019-03-10 19:46:52.454 - Start scan
+2019-03-10 19:46:54.674 - Finish scan 0 %  Time 59' 47"
+2019-03-10 19:51:35.705 - Start application Horus3 0.2rc1
+2019-03-10 19:51:39.890 - Connecting camera 0
+2019-03-10 19:51:40.770 -  Done
+2019-03-10 19:51:40.771 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:51:42.467 - motor speed set
+2019-03-10 19:51:42.467 - timeout set
+2019-03-10 19:51:42.467 - connect set to True
+2019-03-10 19:51:42.468 - Setting current position as origin
+2019-03-10 19:51:42.507 - Origin set - Horus 0.2 connection done
+2019-03-10 19:51:43.094 - Start scan
+2019-03-10 19:52:48.091 - Start application Horus3 0.2rc1
+2019-03-10 19:52:52.132 - Connecting camera 0
+2019-03-10 19:52:53.007 -  Done
+2019-03-10 19:52:53.008 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:52:54.706 - motor speed set
+2019-03-10 19:52:54.709 - timeout set
+2019-03-10 19:52:54.709 - connect set to True
+2019-03-10 19:52:54.709 - Setting current position as origin
+2019-03-10 19:52:54.748 - Origin set - Horus 0.2 connection done
+2019-03-10 19:52:57.239 - Start scan
+2019-03-10 19:52:59.459 - Finish scan 0 %  Time 59' 49"
+2019-03-10 19:53:16.964 - Disconnecting camera 0
+2019-03-10 19:53:16.985 -  Done
+2019-03-10 19:53:16.985 - Disconnecting board /dev/ttyUSB0
+2019-03-10 19:53:16.991 -  Done
+2019-03-10 19:53:39.083 - Start application Horus3 0.2rc1
+2019-03-10 19:53:42.774 - Connecting camera 0
+2019-03-10 19:53:43.779 -  Done
+2019-03-10 19:53:43.779 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:53:45.477 - motor speed set
+2019-03-10 19:53:45.478 - timeout set
+2019-03-10 19:53:45.478 - connect set to True
+2019-03-10 19:53:45.479 - Setting current position as origin
+2019-03-10 19:53:45.518 - Origin set - Horus 0.2 connection done
+2019-03-10 19:53:47.930 - Start scan
+2019-03-10 19:54:45.840 - Finish scan 5 %  Time 00' 56"
+2019-03-10 19:55:32.260 - Start scan
+2019-03-10 19:57:28.196 - Start application Horus3 0.2rc1
+2019-03-10 19:57:31.830 - Connecting camera 0
+2019-03-10 19:57:32.707 -  Done
+2019-03-10 19:57:32.707 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 19:57:34.404 - motor speed set
+2019-03-10 19:57:34.405 - timeout set
+2019-03-10 19:57:34.405 - connect set to True
+2019-03-10 19:57:34.405 - Setting current position as origin
+2019-03-10 19:57:34.445 - Origin set - Horus 0.2 connection done
+2019-03-10 19:57:58.449 - Disconnecting camera 0
+2019-03-10 19:57:58.454 -  Done
+2019-03-10 19:57:58.454 - Disconnecting board /dev/ttyUSB0
+2019-03-10 19:57:58.459 -  Done
+2019-03-10 20:01:12.419 - Start application Horus3 0.2rc1
+2019-03-10 20:01:16.811 - Connecting camera 0
+2019-03-10 20:01:17.605 -  Done
+2019-03-10 20:01:17.605 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 20:01:19.302 - motor speed set
+2019-03-10 20:01:19.303 - timeout set
+2019-03-10 20:01:19.303 - connect set to True
+2019-03-10 20:01:19.303 - Setting current position as origin
+2019-03-10 20:01:19.342 - Origin set - Horus 0.2 connection done
+2019-03-10 20:01:49.161 - Start scan
+2019-03-10 20:02:55.700 - Start application Horus3 0.2rc1
+2019-03-10 20:02:59.228 - Connecting camera 0
+2019-03-10 20:03:00.101 -  Done
+2019-03-10 20:03:00.101 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 20:03:01.802 - motor speed set
+2019-03-10 20:03:01.802 - timeout set
+2019-03-10 20:03:01.802 - connect set to True
+2019-03-10 20:03:01.802 - Setting current position as origin
+2019-03-10 20:03:01.841 - Origin set - Horus 0.2 connection done
+2019-03-10 20:03:08.341 - Start scan
+2019-03-10 20:04:09.930 - Start application Horus3 0.2rc1
+2019-03-10 20:04:14.663 - Connecting camera 0
+2019-03-10 20:04:15.543 -  Done
+2019-03-10 20:04:15.543 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 20:04:17.240 - motor speed set
+2019-03-10 20:04:17.241 - timeout set
+2019-03-10 20:04:17.241 - connect set to True
+2019-03-10 20:04:17.241 - Setting current position as origin
+2019-03-10 20:04:17.280 - Origin set - Horus 0.2 connection done
+2019-03-10 20:04:38.103 - Disconnecting camera 0
+2019-03-10 20:04:38.108 -  Done
+2019-03-10 20:04:38.108 - Disconnecting board /dev/ttyUSB0
+2019-03-10 20:04:38.113 -  Done
+2019-03-10 20:04:41.809 - Start application Horus3 0.2rc1
+2019-03-10 20:04:46.465 - Connecting camera 0
+2019-03-10 20:04:47.260 -  Done
+2019-03-10 20:04:47.260 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 20:04:48.958 - motor speed set
+2019-03-10 20:04:48.959 - timeout set
+2019-03-10 20:04:48.959 - connect set to True
+2019-03-10 20:04:48.959 - Setting current position as origin
+2019-03-10 20:04:48.999 - Origin set - Horus 0.2 connection done
+2019-03-10 20:04:52.175 - Start scan
+2019-03-10 20:04:58.238 - Finish scan 0 %  Time 00' 04"
+2019-03-10 20:05:34.037 - Start scan
+2019-03-10 20:05:49.955 - Finish scan 1 %  Time 00' 15"
+2019-03-10 20:06:54.307 - Start scan
+2019-03-10 20:08:16.832 - Start application Horus3 0.2rc1
+2019-03-10 20:08:21.941 - Connecting camera 0
+2019-03-10 20:08:22.818 -  Done
+2019-03-10 20:08:22.818 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 20:08:24.516 - motor speed set
+2019-03-10 20:08:24.516 - timeout set
+2019-03-10 20:08:24.516 - connect set to True
+2019-03-10 20:08:24.517 - Setting current position as origin
+2019-03-10 20:08:24.556 - Origin set - Horus 0.2 connection done
+2019-03-10 20:08:28.164 - Start scan
+2019-03-10 20:08:41.725 - Finish scan 1 %  Time 00' 13"
+2019-03-10 20:08:47.592 - Start scan
+2019-03-10 20:11:46.426 - Start application Horus3 0.2rc1
+2019-03-10 20:11:52.579 - Connecting camera 0
+2019-03-10 20:11:53.455 -  Done
+2019-03-10 20:11:53.456 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 20:11:55.153 - motor speed set
+2019-03-10 20:11:55.154 - timeout set
+2019-03-10 20:11:55.154 - connect set to True
+2019-03-10 20:11:55.155 - Setting current position as origin
+2019-03-10 20:11:55.194 - Origin set - Horus 0.2 connection done
+2019-03-10 20:41:34.224 - Disconnecting camera 0
+2019-03-10 20:41:34.232 -  Done
+2019-03-10 20:41:34.232 - Disconnecting board /dev/ttyUSB0
+2019-03-10 20:41:34.237 -  Done
+2019-03-10 21:26:58.189 - Start application Horus3 0.2rc1
+2019-03-10 21:27:02.525 - Connecting camera 0
+2019-03-10 21:27:03.341 -  Done
+2019-03-10 21:27:03.341 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 21:27:05.038 - motor speed set
+2019-03-10 21:27:05.039 - timeout set
+2019-03-10 21:27:05.039 - connect set to True
+2019-03-10 21:27:05.040 - Setting current position as origin
+2019-03-10 21:27:05.080 - Origin set - Horus 0.2 connection done
+2019-03-10 21:27:30.869 - Disconnecting camera 0
+2019-03-10 21:27:30.872 -  Done
+2019-03-10 21:27:30.872 - Disconnecting board /dev/ttyUSB0
+2019-03-10 21:27:30.877 -  Done
+2019-03-10 21:27:51.090 - Start application Horus3 0.2rc1
+2019-03-10 21:27:54.452 - Connecting camera 0
+2019-03-10 21:27:55.244 -  Done
+2019-03-10 21:27:55.244 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 21:27:56.942 - motor speed set
+2019-03-10 21:27:56.943 - timeout set
+2019-03-10 21:27:56.943 - connect set to True
+2019-03-10 21:27:56.943 - Setting current position as origin
+2019-03-10 21:27:56.982 - Origin set - Horus 0.2 connection done
+2019-03-10 21:28:53.871 - Start scan
+2019-03-10 21:28:59.331 - Finish scan 0 %  Time 00' 05"
+2019-03-10 21:29:11.431 - Start scan
+2019-03-10 21:29:16.448 - Finish scan 0 %  Time 00' 03"
+2019-03-10 21:29:23.959 - Start scan
+2019-03-10 21:29:31.110 - Finish scan 0 %  Time 00' 06"
+2019-03-10 21:30:35.998 - Disconnecting camera 0
+2019-03-10 21:30:36.022 -  Done
+2019-03-10 21:30:36.022 - Disconnecting board /dev/ttyUSB0
+2019-03-10 21:30:36.027 -  Done
+2019-03-10 21:30:39.971 - Start application Horus3 0.2rc1
+2019-03-10 21:30:51.500 - Connecting camera 0
+2019-03-10 21:30:52.508 -  Done
+2019-03-10 21:30:52.509 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 21:30:54.206 - motor speed set
+2019-03-10 21:30:54.206 - timeout set
+2019-03-10 21:30:54.207 - connect set to True
+2019-03-10 21:30:54.207 - Setting current position as origin
+2019-03-10 21:30:54.247 - Origin set - Horus 0.2 connection done
+2019-03-10 21:31:21.326 - Start scan
+2019-03-10 21:34:42.912 - Finish scan 20 %  Time 03' 20"
+2019-03-10 21:34:49.492 - Disconnecting camera 0
+2019-03-10 21:34:49.519 -  Done
+2019-03-10 21:34:49.519 - Disconnecting board /dev/ttyUSB0
+2019-03-10 21:34:49.525 -  Done
+2019-03-10 21:34:56.756 - Start application Horus3 0.2rc1
+2019-03-10 21:35:05.273 - Connecting camera 0
+2019-03-10 21:35:06.282 -  Done
+2019-03-10 21:35:06.283 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 21:35:07.980 - motor speed set
+2019-03-10 21:35:07.980 - timeout set
+2019-03-10 21:35:07.981 - connect set to True
+2019-03-10 21:35:07.981 - Setting current position as origin
+2019-03-10 21:35:08.020 - Origin set - Horus 0.2 connection done
+2019-03-10 21:35:26.159 - Start scan
+2019-03-10 21:35:40.643 - Finish scan 1 %  Time 00' 13"
+2019-03-10 21:36:27.337 - Start scan
+2019-03-10 21:36:36.784 - Finish scan 0 %  Time 00' 09"
+2019-03-10 21:38:06.620 - Start application Horus3 0.2rc1
+2019-03-10 21:38:13.460 - Connecting camera 0
+2019-03-10 21:38:14.466 -  Done
+2019-03-10 21:38:14.466 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 21:38:16.165 - motor speed set
+2019-03-10 21:38:16.166 - timeout set
+2019-03-10 21:38:16.166 - connect set to True
+2019-03-10 21:38:16.167 - Setting current position as origin
+2019-03-10 21:38:16.207 - Origin set - Horus 0.2 connection done
+2019-03-10 21:38:18.233 - Start scan
+2019-03-10 21:41:06.385 - Finish scan 17 %  Time 02' 47"
+2019-03-10 21:41:09.820 - Disconnecting camera 0
+2019-03-10 21:41:09.851 -  Done
+2019-03-10 21:41:09.852 - Disconnecting board /dev/ttyUSB0
+2019-03-10 21:41:09.857 -  Done
+2019-03-10 21:41:13.683 - Start application Horus3 0.2rc1
+2019-03-10 21:42:37.642 - Connecting camera 0
+2019-03-10 21:42:38.650 -  Done
+2019-03-10 21:42:38.651 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 21:42:40.348 - motor speed set
+2019-03-10 21:42:40.348 - timeout set
+2019-03-10 21:42:40.349 - connect set to True
+2019-03-10 21:42:40.349 - Setting current position as origin
+2019-03-10 21:42:40.388 - Origin set - Horus 0.2 connection done
+2019-03-10 21:42:56.343 - Start scan
+2019-03-10 21:44:05.667 - Finish scan 6 %  Time 01' 08"
+2019-03-10 21:44:28.212 - Start scan
+2019-03-10 21:44:55.979 - Finish scan 2 %  Time 00' 27"
+2019-03-10 21:45:07.426 - Start scan
+2019-03-10 21:58:22.272 - Finish scan 70 %  Time 13' 14"
+2019-03-10 22:03:33.732 - Start scan
+2019-03-10 22:04:15.542 - Finish scan 4 %  Time 00' 40"
+2019-03-10 22:04:17.478 - Disconnecting camera 0
+2019-03-10 22:04:17.517 -  Done
+2019-03-10 22:04:17.517 - Disconnecting board /dev/ttyUSB0
+2019-03-10 22:04:17.522 -  Done
+2019-03-10 22:04:46.984 - Start application Horus3 0.2rc1
+2019-03-10 22:04:50.378 - Connecting camera 0
+2019-03-10 22:04:51.385 -  Done
+2019-03-10 22:04:51.386 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 22:04:53.084 - motor speed set
+2019-03-10 22:04:53.085 - timeout set
+2019-03-10 22:04:53.085 - connect set to True
+2019-03-10 22:04:53.085 - Setting current position as origin
+2019-03-10 22:04:53.125 - Origin set - Horus 0.2 connection done
+2019-03-10 22:05:01.255 - Start scan
+2019-03-10 22:07:55.951 - Finish scan 17 %  Time 02' 53"
+2019-03-10 22:07:57.054 - Disconnecting camera 0
+2019-03-10 22:07:57.094 -  Done
+2019-03-10 22:07:57.095 - Disconnecting board /dev/ttyUSB0
+2019-03-10 22:07:57.100 -  Done
+2019-03-10 22:08:03.192 - Start application Horus3 0.2rc1
+2019-03-10 22:08:33.307 - Connecting camera 0
+2019-03-10 22:08:34.317 -  Done
+2019-03-10 22:08:34.317 - Connecting board /dev/ttyUSB0 115200
+2019-03-10 22:08:36.017 - motor speed set
+2019-03-10 22:08:36.017 - timeout set
+2019-03-10 22:08:36.017 - connect set to True
+2019-03-10 22:08:36.018 - Setting current position as origin
+2019-03-10 22:08:36.057 - Origin set - Horus 0.2 connection done
+2019-03-10 22:08:49.306 - Start scan
+2019-03-10 22:11:56.681 - Finish scan 19 %  Time 03' 07"
+2019-03-10 22:12:25.524 - Start scan
+2019-03-10 22:19:41.795 - Finish scan 100 %  Time 07' 16"
+2019-03-10 22:20:11.363 - Start scan
+2019-03-10 22:34:42.848 - Finish scan 100 %  Time 14' 31"
+2019-03-10 23:36:07.114 - Disconnecting camera 0
+2019-03-10 23:36:11.569 -  Done
+2019-03-10 23:36:11.633 - Disconnecting board /dev/ttyUSB0
+2019-03-10 23:36:12.839 -  Done

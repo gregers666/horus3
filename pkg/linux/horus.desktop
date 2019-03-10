@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Horus
+Comment=3D Scanning Application
+Icon=/usr/share/horus/horus.ico
+Exec=horus
+StartupNotify=true
+Terminal=false
+Categories=GNOME;GTK;Utility;Graphics;
