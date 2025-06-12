@@ -21,7 +21,7 @@ sudo apt install -y \
   libexpat1-dev \
   libcurl4-openssl-dev \
   python3-dev \
-  python3-venv
+  python3-venv \
   python3-serial \
   python3-opengl \
   python3-scipy \
