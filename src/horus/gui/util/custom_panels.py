@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This file is part of the Horus Project
 
@@ -101,10 +102,10 @@ class ExpandablePanel(wx.Panel):
         self.hbox.Add(self.title_text, 1, wx.ALIGN_CENTER_VERTICAL)
         if self.has_undo:
             self.hbox.Add(
-                self.undo_button, 0, wx.RIGHT | wx.BOTTOM | wx.ALIGN_RIGHT, 5)
+                self.undo_button, 0, wx.BOTTOM | wx.ALIGN_CENTER_VERTICAL, 5)
         if self.has_restore:
             self.hbox.Add(
-                self.restore_button, 0, wx.RIGHT | wx.BOTTOM | wx.ALIGN_RIGHT, 5)
+                self.restore_button, 0, wx.BOTTOM | wx.ALIGN_CENTER_VERTICAL, 5)
         self.vbox.Add(self.hbox, 0, wx.TOP | wx.BOTTOM | wx.EXPAND, 5)
         self.vbox.Add(self.content, 1, wx.ALL ^ wx.TOP ^ wx.BOTTOM | wx.EXPAND, 15)
         self.SetSizer(self.vbox)
@@ -226,9 +227,9 @@ class TitleText(wx.Panel):
         self.line = wx.StaticLine(self)
 
         if hand_cursor:
-#            wx.Cursor(wx.StockCursor(wx.CURSOR_HAND))
-            self.title.SetCursor(wx.StockCursor(wx.CURSOR_HAND))
-            self.line.SetCursor(wx.StockCursor(wx.CURSOR_HAND))
+            # Użycie nowej metody zamiast przestarzałej wx.StockCursor
+            self.title.SetCursor(wx.Cursor(wx.CURSOR_HAND))
+            self.line.SetCursor(wx.Cursor(wx.CURSOR_HAND))
 
         # Layout
         vbox = wx.BoxSizer(wx.VERTICAL)
@@ -386,11 +387,11 @@ class Slider(ControlPanel):
         if sys.is_wx30():
             hbox.Add(self.label, 0, wx.BOTTOM | wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 0)
             hbox.AddStretchSpacer()
-            hbox.Add(self.control, 0, wx.BOTTOM | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
+            hbox.Add(self.control, 0, wx.BOTTOM | wx.ALIGN_CENTER_VERTICAL, 5)
         else:
             hbox.Add(self.label, 0, wx.TOP | wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
             hbox.AddStretchSpacer()
-            hbox.Add(self.control, 0, wx.TOP | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 0)
+            hbox.Add(self.control, 0, wx.TOP | wx.ALIGN_CENTER_VERTICAL, 0)
         self.SetSizer(hbox)
         self.Layout()
 
@@ -444,7 +445,7 @@ class ComboBox(ControlPanel):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(label, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
         hbox.AddStretchSpacer()
-        hbox.Add(self.control, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(self.control, 0, wx.ALIGN_CENTER_VERTICAL)
         self.SetSizer(hbox)
         self.Layout()
 
@@ -475,7 +476,7 @@ class CheckBox(ControlPanel):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(label, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
         hbox.AddStretchSpacer()
-        hbox.Add(self.control, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(self.control, 0, wx.ALIGN_CENTER_VERTICAL)
         self.SetSizer(hbox)
         self.Layout()
 
@@ -530,7 +531,7 @@ class TextBox(ControlPanel):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(label, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
         hbox.AddStretchSpacer()
-        hbox.Add(self.control, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(self.control, 0, wx.ALIGN_CENTER_VERTICAL)
         self.SetSizer(hbox)
         self.Layout()
 
@@ -603,7 +604,7 @@ class IntTextBox(ControlPanel):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(label, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
         hbox.AddStretchSpacer()
-        hbox.Add(self.control, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(self.control, 0, wx.ALIGN_CENTER_VERTICAL)
         self.SetSizer(hbox)
         self.Layout()
 
@@ -661,7 +662,7 @@ class FloatTextBox(ControlPanel):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(label, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
         hbox.AddStretchSpacer()
-        hbox.Add(self.control, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(self.control, 0, wx.ALIGN_CENTER_VERTICAL)
         self.SetSizer(hbox)
         self.Layout()
 
@@ -838,7 +839,7 @@ class Button(ControlPanel):
 
         # Layout
         hbox = wx.BoxSizer(wx.HORIZONTAL)
-        hbox.Add(self.control, 1, wx.ALIGN_CENTER_VERTICAL | wx.TOP | wx.EXPAND, 2)
+        hbox.Add(self.control, 1, wx.TOP | wx.EXPAND, 2)
         self.SetSizer(hbox)
         self.Layout()
 
@@ -860,7 +861,7 @@ class CallbackButton(ControlPanel):
 
         # Layout
         hbox = wx.BoxSizer(wx.HORIZONTAL)
-        hbox.Add(self.control, 1, wx.ALIGN_CENTER_VERTICAL | wx.TOP | wx.EXPAND, 2)
+        hbox.Add(self.control, 1, wx.TOP | wx.EXPAND, 2)
         self.SetSizer(hbox)
         self.Layout()
 
@@ -888,7 +889,7 @@ class ToggleButton(ControlPanel):
 
         # Layout
         hbox = wx.BoxSizer(wx.HORIZONTAL)
-        hbox.Add(self.control, 1, wx.ALIGN_CENTER_VERTICAL | wx.TOP | wx.EXPAND, 2)
+        hbox.Add(self.control, 1, wx.TOP | wx.EXPAND, 2)
         self.SetSizer(hbox)
         self.Layout()
 

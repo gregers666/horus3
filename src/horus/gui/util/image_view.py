@@ -22,12 +22,12 @@ class ImageView(wx.Panel):
 
         self.default_image = wx.Image(resources.get_path_for_image("nusb.png"))
         self.image = self.default_image
-        self.bitmap = wx.BitmapFromImage(self.default_image)
+        self.bitmap = wx.Bitmap(self.default_image)
 #        self.bitmap = wx.Bitmap.ConvertToImage(wx.Bitmap(self.default_image))
 
         self.black = black
         self.frame = None
-        self.current_size = self.GetSizeTuple()
+        self.current_size = self.GetSize()
         self.SetDoubleBuffered(True)
 
         self.Bind(wx.EVT_SHOW, self.on_show)
@@ -51,7 +51,8 @@ class ImageView(wx.Panel):
                 dc.Clear()
             else:
                 dc = wx.PaintDC(self)
-            dc.DrawBitmap(self.bitmap, self.x_offset, self.y_offset)
+            dc.DrawBitmap(self.bitmap, int(self.x_offset), int(self.y_offset))
+
 
     def on_resize(self, size):
         new_size = size.GetSize()
@@ -78,8 +79,8 @@ class ImageView(wx.Panel):
     def refresh_bitmap(self):
         (w, h, self.x_offset, self.y_offset) = self.get_best_size()
         if w > 0 and h > 0:
-            self.bitmap = wx.BitmapFromImage(self.image.Scale(w, h, self.quality))
-#            self.bitmap = wx.Bitmap.ConvertToImage(wx.Bitmap(self.image.Scale(w, h, self.quality)))
+            self.bitmap = wx.Bitmap(self.image.Scale(int(w), int(h), self.quality))
+#            self.bitmap = wx.Bitmap.ConvertToImage(wx.Bitmap(self.image.Scale(int(w), int(h), self.quality)))
             self.Refresh()
 
     def get_best_size(self):

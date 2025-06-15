@@ -67,7 +67,7 @@ class LaserTriangulationPages(wx.Panel):
             self.wait_cursor = wx.BusyCursor()
 
     def progress_calibration(self, progress):
-        self.video_page.gauge.SetValue(int(progress))
+        self.video_page.gauge.SetValue(progress)
 
     def after_calibration(self, response):
         ret, result = response

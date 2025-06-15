@@ -1,9 +1,46 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This file is part of the Horus Project
 
 __author__ = 'Jesús Arroyo Torrens <jesus.arroyo@bq.com>'
 __copyright__ = 'Copyright (C) 2014-2016 Mundo Reader S.L.'
 __license__ = 'GNU General Public License v2 http://www.gnu.org/licenses/gpl2.html'
+
+
+# DMM-1118 MakerBot Digitizer
+
+#                  brightness 0x00980900 (int)    : min=-10 max=10 step=1 default=-10 value=10
+#                    contrast 0x00980901 (int)    : min=0 max=20 step=1 default=10 value=9
+#                  saturation 0x00980902 (int)    : min=0 max=10 step=1 default=6 value=2
+#     white_balance_automatic 0x0098090c (bool)   : default=1 value=1
+#                       gamma 0x00980910 (int)    : min=100 max=200 step=1 default=150 value=100
+#                        gain 0x00980913 (int)    : min=32 max=48 step=1 default=32 value=32
+#        power_line_frequency 0x00980918 (menu)   : min=0 max=2 default=2 value=2 (60 Hz)
+# 			0: Disabled
+# 			1: 50 Hz
+# 			2: 60 Hz
+#   white_balance_temperature 0x0098091a (int)    : min=2800 max=6500 step=1 default=6500 value=5000 flags=inactive
+#                   sharpness 0x0098091b (int)    : min=0 max=10 step=1 default=7 value=7
+
+#   auto_exposure 0x009a0901 (menu)   : min=0 max=3 default=3 value=1 (Manual Mode)
+# 				1: Manual Mode
+# 				3: Aperture Priority Mode
+#   exposure_time_absolute 0x009a0902 (int)    : min=8 max=16384 step=1 default=256 value=3940
+
+# Kamera - ustawienia domyślne
+
+CAMERA_DEFAULT_BRIGHTNESS = -10      # int, min=-10, max=10
+CAMERA_DEFAULT_CONTRAST = 10         # int, min=0, max=20
+CAMERA_DEFAULT_SATURATION = 6        # int, min=0, max=10
+CAMERA_DEFAULT_WHITE_BALANCE_AUTO = True  # bool, default=1 (enabled)
+CAMERA_DEFAULT_GAMMA = 150           # int, min=100, max=200
+CAMERA_DEFAULT_GAIN = 32             # int, min=32, max=48
+CAMERA_DEFAULT_POWER_LINE_FREQUENCY = 1  # Menu: 0 = Disabled, 1 = 50 Hz, 2 = 60 Hz
+CAMERA_DEFAULT_WHITE_BALANCE_TEMP = 6500 # int, min=2800, max=6500 (inactive if auto enabled)
+CAMERA_DEFAULT_SHARPNESS = 10        # int, min=0, max=10
+CAMERA_AUTO_EXPOSURE = 1             # manual mode
+CAMERA_EXPOSURE_TIME_ABSOLUTE = 256        # int, min=8 max=16384
+
 
 import cv2
 import math
@@ -94,10 +131,11 @@ class Camera(object):
             self._min_saturation = 0.
 
     def initialize(self):
-        self._brightness = 0
-        self._contrast = 0
-        self._saturation = 0
-        self._exposure = 0
+        # Ustawienie wszystkich wartości domyślnych zgodnie ze stałymi CAMERA_DEFAULT_*
+        self._brightness = CAMERA_DEFAULT_BRIGHTNESS
+        self._contrast = CAMERA_DEFAULT_CONTRAST
+        self._saturation = CAMERA_DEFAULT_SATURATION
+        self._exposure = CAMERA_EXPOSURE_TIME_ABSOLUTE
         self._frame_rate = 0
         self._width = 0
         self._height = 0
@@ -117,8 +155,9 @@ class Camera(object):
             print('self._capture is not None')
             self._capture.release()
         self._capture = cv2.VideoCapture(self.camera_id)
-        # DODANE
-        self._capture.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
+        
+        # Ustawienie domyślnego trybu exposure
+        self._capture.set(cv2.CAP_PROP_AUTO_EXPOSURE, CAMERA_AUTO_EXPOSURE)
         print(self._capture.get(cv2.CAP_PROP_AUTO_EXPOSURE))
         
         print(('Camera ID %s' % self.camera_id))
@@ -131,9 +170,98 @@ class Camera(object):
             self._check_video()
             self._check_camera()
             self._check_driver()
+            
+            # Zastosowanie wszystkich domyślnych ustawień po połączeniu
+            self._apply_default_settings()
+            
             logger.info(" Done")
         else:
             raise CameraNotConnected()
+
+    def _apply_default_settings(self):
+        """Zastosowanie wszystkich domyślnych ustawień kamery"""
+        logger.info("Applying default camera settings...")
+        
+        try:
+            # Ustawienie brightness
+            self.set_brightness(CAMERA_DEFAULT_BRIGHTNESS)
+            logger.info(f"Set brightness to: {CAMERA_DEFAULT_BRIGHTNESS}")
+            
+            # Ustawienie contrast
+            self.set_contrast(CAMERA_DEFAULT_CONTRAST)
+            logger.info(f"Set contrast to: {CAMERA_DEFAULT_CONTRAST}")
+            
+            # Ustawienie saturation
+            self.set_saturation(CAMERA_DEFAULT_SATURATION)
+            logger.info(f"Set saturation to: {CAMERA_DEFAULT_SATURATION}")
+            
+            # Ustawienie exposure
+            self.set_exposure(CAMERA_EXPOSURE_TIME_ABSOLUTE)
+            logger.info(f"Set exposure to: {CAMERA_EXPOSURE_TIME_ABSOLUTE}")
+            
+            # Dodatkowe ustawienia specyficzne dla systemu
+            if system == 'Darwin':
+                # Ustawienia dla macOS przez UVC controls
+                if hasattr(self, 'controls'):
+                    # White balance automatic
+                    if 'UVCC_REQ_WHITE_BALANCE_AUTO' in self.controls:
+                        self.controls['UVCC_REQ_WHITE_BALANCE_AUTO'].set_val(1 if CAMERA_DEFAULT_WHITE_BALANCE_AUTO else 0)
+                        logger.info(f"Set white balance auto to: {CAMERA_DEFAULT_WHITE_BALANCE_AUTO}")
+                    
+                    # Gamma
+                    if 'UVCC_REQ_GAMMA' in self.controls:
+                        gamma_ctl = self.controls['UVCC_REQ_GAMMA']
+                        gamma_val = self._line(CAMERA_DEFAULT_GAMMA, 100, 200, gamma_ctl.min, gamma_ctl.max)
+                        gamma_ctl.set_val(gamma_val)
+                        logger.info(f"Set gamma to: {CAMERA_DEFAULT_GAMMA}")
+                    
+                    # Gain
+                    if 'UVCC_REQ_GAIN' in self.controls:
+                        gain_ctl = self.controls['UVCC_REQ_GAIN']
+                        gain_val = self._line(CAMERA_DEFAULT_GAIN, 32, 48, gain_ctl.min, gain_ctl.max)
+                        gain_ctl.set_val(gain_val)
+                        logger.info(f"Set gain to: {CAMERA_DEFAULT_GAIN}")
+                    
+                    # Sharpness
+                    if 'UVCC_REQ_SHARPNESS_ABS' in self.controls:
+                        sharp_ctl = self.controls['UVCC_REQ_SHARPNESS_ABS']
+                        sharp_val = self._line(CAMERA_DEFAULT_SHARPNESS, 0, 10, sharp_ctl.min, sharp_ctl.max)
+                        sharp_ctl.set_val(sharp_val)
+                        logger.info(f"Set sharpness to: {CAMERA_DEFAULT_SHARPNESS}")
+            
+            elif system == 'Linux':
+                # Dodatkowe ustawienia dla Linux przez V4L2
+                # Gain (jeśli dostępne)
+                try:
+                    gain_val = self._line(CAMERA_DEFAULT_GAIN, 32, 48, 0, 255)
+                    self._capture.set(cv2.CAP_PROP_GAIN, gain_val)
+                    logger.info(f"Set gain to: {CAMERA_DEFAULT_GAIN}")
+                except:
+                    logger.warning("Could not set gain")
+                
+                # Gamma (jeśli dostępne)
+                try:
+                    gamma_val = self._line(CAMERA_DEFAULT_GAMMA, 100, 200, 0, 255)
+                    self._capture.set(cv2.CAP_PROP_GAMMA, gamma_val)
+                    logger.info(f"Set gamma to: {CAMERA_DEFAULT_GAMMA}")
+                except:
+                    logger.warning("Could not set gamma")
+                
+                # White balance (jeśli dostępne)
+                try:
+                    if CAMERA_DEFAULT_WHITE_BALANCE_AUTO:
+                        self._capture.set(cv2.CAP_PROP_AUTO_WB, 1)
+                    else:
+                        self._capture.set(cv2.CAP_PROP_AUTO_WB, 0)
+                        self._capture.set(cv2.CAP_PROP_WB_TEMPERATURE, CAMERA_DEFAULT_WHITE_BALANCE_TEMP)
+                    logger.info(f"Set white balance auto to: {CAMERA_DEFAULT_WHITE_BALANCE_AUTO}")
+                except:
+                    logger.warning("Could not set white balance")
+            
+            logger.info("Default camera settings applied successfully")
+            
+        except Exception as e:
+            logger.error(f"Error applying default settings: {e}")
 
     def disconnect(self):
         tries = 0
@@ -257,13 +385,12 @@ class Camera(object):
                 self._brightness = value
                 if system == 'Darwin':
                     ctl = self.controls['UVCC_REQ_BRIGHTNESS_ABS']
-                    ctl.set_val(self._line(value, 0, self._max_brightness, ctl.min, ctl.max))
+                    ctl.set_val(self._line(value, -10, 10, ctl.min, ctl.max))
                 else:
                     print("requested brightness %s" % value)
                     value = int(value)
                     print("calculated brightness %s" % value)                    
                     ret = self._capture.set(cv2.CAP_PROP_BRIGHTNESS, value)
-
 
                     if system == 'Linux' and not ret:
                         raise InputOutputError()
@@ -276,9 +403,9 @@ class Camera(object):
                 self._contrast = value
                 if system == 'Darwin':
                     ctl = self.controls['UVCC_REQ_CONTRAST_ABS']
-                    ctl.set_val(self._line(value, 0, self._max_contrast, ctl.min, ctl.max))
+                    ctl.set_val(self._line(value, 0, 20, ctl.min, ctl.max))
                 else:
-                    value = int(value) #/ self._max_contrast
+                    value = int(value)
                     ret = self._capture.set(cv2.CAP_PROP_CONTRAST, value)
                     if system == 'Linux' and not ret:
                         raise InputOutputError()
@@ -291,7 +418,7 @@ class Camera(object):
                 self._saturation = value
                 if system == 'Darwin':
                     ctl = self.controls['UVCC_REQ_SATURATION_ABS']
-                    ctl.set_val(self._line(value, 0, self._max_saturation, ctl.min, ctl.max))
+                    ctl.set_val(self._line(value, 0, 10, ctl.min, ctl.max))
                 else:
                     value = int(value) / self._max_saturation
                     ret = self._capture.set(cv2.CAP_PROP_SATURATION, value)
@@ -321,9 +448,7 @@ class Camera(object):
                     self._capture.set(cv2.CAP_PROP_EXPOSURE, value)
                 else:
                     print("Calculating value from %s" % value)
-#                    print("before setting cv2.CAP_PROP_AUTO_EXPOSURE = %s" % self._capture.get(cv2.CAP_PROP_AUTO_EXPOSURE))
-                    self._capture.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
-#                    print("after setting to 1 cv2.CAP_PROP_AUTO_EXPOSURE = %s" % self._capture.get(cv2.CAP_PROP_AUTO_EXPOSURE))
+                    self._capture.set(cv2.CAP_PROP_AUTO_EXPOSURE, CAMERA_AUTO_EXPOSURE)
                     print("before setting to %s get(cv2.CAP_PROP_EXPOSURE)=%s)" % (value, self._capture.get(cv2.CAP_PROP_EXPOSURE)))
                     ret = self._capture.set(cv2.CAP_PROP_EXPOSURE, value)
                     print("after setting to %s get(cv2.CAP_PROP_EXPOSURE)=%s)" % (value, self._capture.get(cv2.CAP_PROP_EXPOSURE)))
@@ -344,7 +469,6 @@ class Camera(object):
 
     def set_frame_rate(self, value):
         print("Entering set_frame_rate")
-        #print("System = %s" % system)       
         print("requested value = %s" % value)
         if self._is_connected:
             print("Camera _is_connected")
@@ -382,7 +506,6 @@ class Camera(object):
                 value = ctl.get_val()
             else:
                 value = self._capture.get(cv2.CAP_PROP_BRIGHTNESS)
-                #value *= self._max_brightness
             return value
 
     def get_exposure(self):
@@ -396,7 +519,6 @@ class Camera(object):
                 value = 2 ** -value
             else:
                 value = self._capture.get(cv2.CAP_PROP_EXPOSURE)
-                #value *= self._max_exposure
             return value
 
     def get_resolution(self):

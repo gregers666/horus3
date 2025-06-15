@@ -207,14 +207,14 @@ class ConnectionPage(WizardPage):
     def before_auto_check(self):
         self.Disable()
         self.enable_next = False
-        self.gauge.SetValue(int(0))
+        self.gauge.SetValue(0)
         self.result_label.Hide()
         self.gauge.Show()
         self.wait_cursor = wx.BusyCursor()
         self.Layout()
 
     def progress_auto_check(self, progress):
-        self.gauge.SetValue(int(progress))
+        self.gauge.SetValue(progress)
 
     def after_auto_check(self, response):
         ret, result = response
@@ -287,7 +287,7 @@ class ConnectionPage(WizardPage):
         else:
             self.video_view.stop()
             self.video_view.reset()
-            self.gauge.SetValue(int(0))
+            self.gauge.SetValue(0)
             self.gauge.Show()
             self.result_label.Hide()
             self.result_label.SetLabel("")

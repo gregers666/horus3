@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This file is part of the Horus Project
 
@@ -19,9 +20,73 @@ logger = logging.getLogger(__name__)
 
 from . import resources, system
 #from horus.util import resources, system
+from collections.abc import MutableMapping
+
+# Import camera default values from camera module
+try:
+    from .camera import (
+        CAMERA_DEFAULT_BRIGHTNESS,
+        CAMERA_DEFAULT_CONTRAST,
+        CAMERA_DEFAULT_SATURATION,
+        CAMERA_EXPOSURE_TIME_ABSOLUTE,
+        CAMERA_DEFAULT_GAMMA,
+        CAMERA_DEFAULT_GAIN,
+        CAMERA_DEFAULT_SHARPNESS,
+        CAMERA_DEFAULT_WHITE_BALANCE_AUTO,
+        CAMERA_DEFAULT_WHITE_BALANCE_TEMP,
+        CAMERA_DEFAULT_POWER_LINE_FREQUENCY,
+        CAMERA_AUTO_EXPOSURE,
+        # Import ranges for validation
+        CAMERA_MIN_BRIGHTNESS,
+        CAMERA_MAX_BRIGHTNESS,
+        CAMERA_MIN_CONTRAST,
+        CAMERA_MAX_CONTRAST,
+        CAMERA_MIN_SATURATION,
+        CAMERA_MAX_SATURATION,
+        CAMERA_MIN_EXPOSURE,
+        CAMERA_MAX_EXPOSURE,
+        CAMERA_MIN_GAMMA,
+        CAMERA_MAX_GAMMA,
+        CAMERA_MIN_GAIN,
+        CAMERA_MAX_GAIN,
+        CAMERA_MIN_SHARPNESS,
+        CAMERA_MAX_SHARPNESS,
+        CAMERA_MIN_WHITE_BALANCE_TEMP,
+        CAMERA_MAX_WHITE_BALANCE_TEMP
+    )
+except ImportError:
+    # Fallback values if camera module is not available
+    CAMERA_DEFAULT_BRIGHTNESS = -10
+    CAMERA_DEFAULT_CONTRAST = 10
+    CAMERA_DEFAULT_SATURATION = 6
+    CAMERA_EXPOSURE_TIME_ABSOLUTE = 256
+    CAMERA_DEFAULT_GAMMA = 150
+    CAMERA_DEFAULT_GAIN = 32
+    CAMERA_DEFAULT_SHARPNESS = 7
+    CAMERA_DEFAULT_WHITE_BALANCE_AUTO = True
+    CAMERA_DEFAULT_WHITE_BALANCE_TEMP = 6500
+    CAMERA_DEFAULT_POWER_LINE_FREQUENCY = 1
+    CAMERA_AUTO_EXPOSURE = 1
+    # Fallback ranges
+    CAMERA_MIN_BRIGHTNESS = -10
+    CAMERA_MAX_BRIGHTNESS = 10
+    CAMERA_MIN_CONTRAST = 0
+    CAMERA_MAX_CONTRAST = 20
+    CAMERA_MIN_SATURATION = 0
+    CAMERA_MAX_SATURATION = 10
+    CAMERA_MIN_EXPOSURE = 8
+    CAMERA_MAX_EXPOSURE = 16384
+    CAMERA_MIN_GAMMA = 100
+    CAMERA_MAX_GAMMA = 200
+    CAMERA_MIN_GAIN = 32
+    CAMERA_MAX_GAIN = 48
+    CAMERA_MIN_SHARPNESS = 0
+    CAMERA_MAX_SHARPNESS = 10
+    CAMERA_MIN_WHITE_BALANCE_TEMP = 2800
+    CAMERA_MAX_WHITE_BALANCE_TEMP = 6500
 
 
-class Settings(collections.MutableMapping):
+class Settings(MutableMapping):
 
     def __init__(self):
         self._settings_dict = dict()
@@ -180,18 +245,54 @@ class Settings(collections.MutableMapping):
         self._add_setting(
             Setting('luminosity', _('Luminosity'), 'profile_settings',
                     str, 'Medium', possible_values=('High', 'Medium', 'Low')))
+        
+        # Basic camera controls - use camera default values with proper ranges
         self._add_setting(
             Setting('brightness_control', _('Brightness'), 'profile_settings',
-                    int, 128, min_value=0, max_value=255))
+                    int, CAMERA_DEFAULT_BRIGHTNESS, 
+                    min_value=CAMERA_MIN_BRIGHTNESS, max_value=CAMERA_MAX_BRIGHTNESS))
         self._add_setting(
             Setting('contrast_control', _('Contrast'), 'profile_settings',
-                    int, 2, min_value=0, max_value=19))
+                    int, CAMERA_DEFAULT_CONTRAST, 
+                    min_value=CAMERA_MIN_CONTRAST, max_value=CAMERA_MAX_CONTRAST))
         self._add_setting(
             Setting('saturation_control', _('Saturation'), 'profile_settings',
-                    int, 512, min_value=0, max_value=1024))
+                    int, CAMERA_DEFAULT_SATURATION, 
+                    min_value=CAMERA_MIN_SATURATION, max_value=CAMERA_MAX_SATURATION))
         self._add_setting(
             Setting('exposure_control', _('Exposure'), 'profile_settings',
-                    int, 256, min_value=1, max_value=8192))
+                    int, CAMERA_EXPOSURE_TIME_ABSOLUTE, 
+                    min_value=CAMERA_MIN_EXPOSURE, max_value=CAMERA_MAX_EXPOSURE))
+        
+        # Advanced camera controls
+        self._add_setting(
+            Setting('gamma_control', _('Gamma'), 'profile_settings',
+                    int, CAMERA_DEFAULT_GAMMA, 
+                    min_value=CAMERA_MIN_GAMMA, max_value=CAMERA_MAX_GAMMA))
+        self._add_setting(
+            Setting('gain_control', _('Gain'), 'profile_settings',
+                    int, CAMERA_DEFAULT_GAIN, 
+                    min_value=CAMERA_MIN_GAIN, max_value=CAMERA_MAX_GAIN))
+        self._add_setting(
+            Setting('sharpness_control', _('Sharpness'), 'profile_settings',
+                    int, CAMERA_DEFAULT_SHARPNESS, 
+                    min_value=CAMERA_MIN_SHARPNESS, max_value=CAMERA_MAX_SHARPNESS))
+        self._add_setting(
+            Setting('white_balance_auto_control', _('Auto White Balance'), 'profile_settings',
+                    bool, CAMERA_DEFAULT_WHITE_BALANCE_AUTO))
+        self._add_setting(
+            Setting('white_balance_temp_control', _('White Balance Temperature'), 'profile_settings',
+                    int, CAMERA_DEFAULT_WHITE_BALANCE_TEMP, 
+                    min_value=CAMERA_MIN_WHITE_BALANCE_TEMP, max_value=CAMERA_MAX_WHITE_BALANCE_TEMP))
+        self._add_setting(
+            Setting('power_line_freq_control', _('Power Line Frequency'), 'profile_settings',
+                    int, CAMERA_DEFAULT_POWER_LINE_FREQUENCY, 
+                    possible_values=(0, 1, 2)))  # 0=Disabled, 1=50Hz, 2=60Hz
+        self._add_setting(
+            Setting('auto_exposure_mode_control', _('Auto Exposure Mode'), 'profile_settings',
+                    int, CAMERA_AUTO_EXPOSURE, 
+                    possible_values=(1, 3)))  # 1=Manual, 3=Aperture Priority
+        
         self._add_setting(
             Setting('frame_rate', _('Frame rate'), 'profile_settings',
                     int, 30, possible_values=(30, 25, 20, 15, 10, 5)))
@@ -218,31 +319,41 @@ class Settings(collections.MutableMapping):
             Setting('capture_mode_scanning', _('Capture mode'), 'profile_settings',
                     str, 'Texture', possible_values=('Texture', 'Laser')))
 
+        # Texture scanning settings - use camera defaults
         self._add_setting(
             Setting('brightness_texture_scanning', _('Brightness'), 'profile_settings',
-                    int, 128, min_value=0, max_value=255))
+                    int, CAMERA_DEFAULT_BRIGHTNESS, 
+                    min_value=CAMERA_MIN_BRIGHTNESS, max_value=CAMERA_MAX_BRIGHTNESS))
         self._add_setting(
             Setting('contrast_texture_scanning', _('Contrast'), 'profile_settings',
-                    int, 2, min_value=0, max_value=19))
+                    int, CAMERA_DEFAULT_CONTRAST, 
+                    min_value=CAMERA_MIN_CONTRAST, max_value=CAMERA_MAX_CONTRAST))
         self._add_setting(
             Setting('saturation_texture_scanning', _('Saturation'), 'profile_settings',
-                    int, 512, min_value=0, max_value=1024))
+                    int, CAMERA_DEFAULT_SATURATION, 
+                    min_value=CAMERA_MIN_SATURATION, max_value=CAMERA_MAX_SATURATION))
         self._add_setting(
             Setting('exposure_texture_scanning', _('Exposure'), 'profile_settings',
-                    int, 256, min_value=1, max_value=8192))
+                    int, CAMERA_EXPOSURE_TIME_ABSOLUTE, 
+                    min_value=CAMERA_MIN_EXPOSURE, max_value=CAMERA_MAX_EXPOSURE))
 
+        # Laser scanning settings - use camera defaults but saturation=0 for laser
         self._add_setting(
             Setting('brightness_laser_scanning', _('Brightness'), 'profile_settings',
-                    int, 128, min_value=0, max_value=255))
+                    int, CAMERA_DEFAULT_BRIGHTNESS, 
+                    min_value=CAMERA_MIN_BRIGHTNESS, max_value=CAMERA_MAX_BRIGHTNESS))
         self._add_setting(
             Setting('contrast_laser_scanning', _('Contrast'), 'profile_settings',
-                    int, 2, min_value=0, max_value=19))
+                    int, CAMERA_DEFAULT_CONTRAST, 
+                    min_value=CAMERA_MIN_CONTRAST, max_value=CAMERA_MAX_CONTRAST))
         self._add_setting(
             Setting('saturation_laser_scanning', _('Saturation'), 'profile_settings',
-                    int, 0, min_value=0, max_value=1024))
+                    int, 0,  # 0 for laser scanning
+                    min_value=CAMERA_MIN_SATURATION, max_value=CAMERA_MAX_SATURATION))
         self._add_setting(
             Setting('exposure_laser_scanning', _('Exposure'), 'profile_settings',
-                    int, 256, min_value=1, max_value=16384))
+                    int, CAMERA_EXPOSURE_TIME_ABSOLUTE, 
+                    min_value=CAMERA_MIN_EXPOSURE, max_value=CAMERA_MAX_EXPOSURE))
         self._add_setting(
             Setting('remove_background_scanning', _('Remove background'),
                     'profile_settings', bool, True))
@@ -283,31 +394,41 @@ class Settings(collections.MutableMapping):
             Setting('capture_mode_calibration', _('Capture mode'), 'profile_settings',
                     str, 'Pattern', possible_values=('Pattern', 'Laser')))
 
+        # Pattern calibration settings - use camera defaults
         self._add_setting(
             Setting('brightness_pattern_calibration', _('Brightness'), 'profile_settings',
-                    int, 128, min_value=0, max_value=255))
+                    int, CAMERA_DEFAULT_BRIGHTNESS, 
+                    min_value=CAMERA_MIN_BRIGHTNESS, max_value=CAMERA_MAX_BRIGHTNESS))
         self._add_setting(
             Setting('contrast_pattern_calibration', _('Contrast'), 'profile_settings',
-                    int, 2, min_value=0, max_value=19))
+                    int, CAMERA_DEFAULT_CONTRAST, 
+                    min_value=CAMERA_MIN_CONTRAST, max_value=CAMERA_MAX_CONTRAST))
         self._add_setting(
             Setting('saturation_pattern_calibration', _('Saturation'), 'profile_settings',
-                    int, 512, min_value=0, max_value=1024))
+                    int, CAMERA_DEFAULT_SATURATION, 
+                    min_value=CAMERA_MIN_SATURATION, max_value=CAMERA_MAX_SATURATION))
         self._add_setting(
             Setting('exposure_pattern_calibration', _('Exposure'), 'profile_settings',
-                    int, 256, min_value=1, max_value=16384))
+                    int, CAMERA_EXPOSURE_TIME_ABSOLUTE, 
+                    min_value=CAMERA_MIN_EXPOSURE, max_value=CAMERA_MAX_EXPOSURE))
 
+        # Laser calibration settings - use camera defaults
         self._add_setting(
             Setting('brightness_laser_calibration', _('Brightness'), 'profile_settings',
-                    int, 128, min_value=0, max_value=255))
+                    int, CAMERA_DEFAULT_BRIGHTNESS, 
+                    min_value=CAMERA_MIN_BRIGHTNESS, max_value=CAMERA_MAX_BRIGHTNESS))
         self._add_setting(
             Setting('contrast_laser_calibration', _('Contrast'), 'profile_settings',
-                    int, 2, min_value=0, max_value=19))
+                    int, CAMERA_DEFAULT_CONTRAST, 
+                    min_value=CAMERA_MIN_CONTRAST, max_value=CAMERA_MAX_CONTRAST))
         self._add_setting(
             Setting('saturation_laser_calibration', _('Saturation'), 'profile_settings',
-                    int, 512, min_value=0, max_value=1024))
+                    int, CAMERA_DEFAULT_SATURATION, 
+                    min_value=CAMERA_MIN_SATURATION, max_value=CAMERA_MAX_SATURATION))
         self._add_setting(
             Setting('exposure_laser_calibration', _('Exposure'), 'profile_settings',
-                    int, 256, min_value=1, max_value=16384))
+                    int, CAMERA_EXPOSURE_TIME_ABSOLUTE, 
+                    min_value=CAMERA_MIN_EXPOSURE, max_value=CAMERA_MAX_EXPOSURE))
         self._add_setting(
             Setting('remove_background_calibration', _('Remove background'),
                     'profile_settings', bool, True))
@@ -452,13 +573,9 @@ class Settings(collections.MutableMapping):
 
         self._add_setting(
             Setting('camera_matrix', _('Camera matrix'), 'calibration_settings',
-#                    np.ndarray, np.ndarray(shape=(3, 3), buffer=np.array([[1430.0, 0.0, 480.0],
-#                                                                          [0.0, 1430.0, 620.0],
-#                                                                          [0.0, 0.0, 1.0]]))))
                     np.ndarray, np.ndarray(shape=(3, 3), buffer=np.array([[1308.0, 0.0, 548.0],
                                                                           [0.0, 1308.0, 676.0],
                                                                           [0.0, 0.0, 1.0]]))))
-
 
         self._add_setting(
             Setting('distortion_vector', _('Distortion vector'), 'calibration_settings',
@@ -523,12 +640,6 @@ class Settings(collections.MutableMapping):
         self._add_setting(
             Setting('machine_model_path', _('Machine model'), 'machine_settings',
                     str, str(resources.get_path_for_mesh('ciclop_platform.stl'))))
-        # self._add_setting(
-        #     Setting('roi_width', _('Width (mm)'), 'machine_settings',
-        #             int, 200, min_value=0, max_value=250))
-        # self._add_setting(
-        #     Setting('roi_depth', _('Depth (mm)'), 'machine_settings',
-        #             int, 200, min_value=0, max_value=250))
 
         self._add_setting(
             Setting('current_panel_scanning', 'scan_parameters', 'profile_settings',
@@ -632,6 +743,104 @@ class Settings(collections.MutableMapping):
         self._add_setting(
             Setting('last_clear_log_date', _('Last clear log date'), 'preferences', str, ''))
 
+    def get_camera_settings_dict(self):
+        """Zwraca słownik ze wszystkimi ustawieniami kamery do ręcznej kontroli"""
+        camera_params = {}
+        
+        # Basic controls
+        if 'brightness_control' in self._settings_dict:
+            camera_params['brightness'] = self['brightness_control']
+        if 'contrast_control' in self._settings_dict:
+            camera_params['contrast'] = self['contrast_control']
+        if 'saturation_control' in self._settings_dict:
+            camera_params['saturation'] = self['saturation_control']
+        if 'exposure_control' in self._settings_dict:
+            camera_params['exposure'] = self['exposure_control']
+            
+        # Advanced controls
+        if 'gamma_control' in self._settings_dict:
+            camera_params['gamma'] = self['gamma_control']
+        if 'gain_control' in self._settings_dict:
+            camera_params['gain'] = self['gain_control']
+        if 'sharpness_control' in self._settings_dict:
+            camera_params['sharpness'] = self['sharpness_control']
+        if 'white_balance_auto_control' in self._settings_dict:
+            camera_params['white_balance_auto'] = self['white_balance_auto_control']
+        if 'white_balance_temp_control' in self._settings_dict:
+            camera_params['white_balance_temperature'] = self['white_balance_temp_control']
+        if 'power_line_freq_control' in self._settings_dict:
+            camera_params['power_line_frequency'] = self['power_line_freq_control']
+        if 'auto_exposure_mode_control' in self._settings_dict:
+            camera_params['auto_exposure_mode'] = self['auto_exposure_mode_control']
+            
+        return camera_params
+
+    def apply_camera_settings_to_camera(self, camera):
+        """Aplikuje ustawienia profilu do obiektu kamery"""
+        if not hasattr(camera, 'enable_manual_control'):
+            logger.warning("Camera does not support manual control")
+            return
+            
+        try:
+            # Enable manual control
+            camera.enable_manual_control(True)
+            
+            # Get all camera parameters from settings
+            camera_params = self.get_camera_settings_dict()
+            
+            # Apply parameters to camera
+            camera.set_parameters_from_dict(camera_params)
+            
+            logger.info("Applied profile camera settings to camera")
+            
+        except Exception as e:
+            logger.error(f"Error applying camera settings to camera: {e}")
+
+    def update_camera_settings_from_camera(self, camera):
+        """Aktualizuje ustawienia profilu na podstawie aktualnych parametrów kamery"""
+        if not hasattr(camera, 'get_all_parameters'):
+            logger.warning("Camera does not support parameter retrieval")
+            return
+            
+        try:
+            # Get current camera parameters
+            camera_params = camera.get_all_parameters()
+            
+            # Update profile settings
+            for param_name, value in camera_params.items():
+                setting_key = None
+                
+                if param_name == 'brightness':
+                    setting_key = 'brightness_control'
+                elif param_name == 'contrast':
+                    setting_key = 'contrast_control'
+                elif param_name == 'saturation':
+                    setting_key = 'saturation_control'
+                elif param_name == 'exposure':
+                    setting_key = 'exposure_control'
+                elif param_name == 'gamma':
+                    setting_key = 'gamma_control'
+                elif param_name == 'gain':
+                    setting_key = 'gain_control'
+                elif param_name == 'sharpness':
+                    setting_key = 'sharpness_control'
+                elif param_name == 'white_balance_auto':
+                    setting_key = 'white_balance_auto_control'
+                elif param_name == 'white_balance_temperature':
+                    setting_key = 'white_balance_temp_control'
+                elif param_name == 'power_line_frequency':
+                    setting_key = 'power_line_freq_control'
+                elif param_name == 'auto_exposure_mode':
+                    setting_key = 'auto_exposure_mode_control'
+                
+                if setting_key and setting_key in self._settings_dict:
+                    self[setting_key] = value
+            
+            logger.info("Updated profile camera settings from camera")
+            
+        except Exception as e:
+            logger.error(f"Error updating camera settings from camera: {e}")
+
 
 class Setting(object):
 
@@ -702,14 +911,10 @@ class Setting(object):
 
     def _check_range(self, value):
         if self.min_value is not None and value < self.min_value:
-            # raise ValueError('Error when setting %s.\n%s is below min value %s.' %
-            # (self._id, value, self.min_value))
             logger.warning('Warning: For setting %s, %s is below min value %s.' % (self._id, value,
                            self.min_value))
             return self.min_value
         if self.max_value is not None and value > self.max_value:
-            # raise ValueError('Error when setting %s.\n%s is above max value %s.' %
-            # (self._id, value, self.max_value))
             logger.warning('Warning: For setting %s.\n%s is above max value %s.' % (self._id, value,
                            self.max_value))
             return self.max_value

@@ -56,10 +56,10 @@ def download_lastest_data():
 
 
 def check_for_updates():
-    return latest_version is not '' and \
+    return latest_version != '' and \
         latest_version.number >= current_version.number and \
         latest_version.prenumber >= current_version.prenumber and \
-        current_datetime is not '' and \
+        current_datetime != '' and \
         latest_datetime > current_datetime
 
 

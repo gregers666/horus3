@@ -40,7 +40,7 @@ class VideoPage(Page):
         self.Layout()
 
     def initialize(self):
-        self.gauge.SetValue(int(0))
+        self.gauge.SetValue(0)
         self.right_button.Enable()
 
     def play(self):

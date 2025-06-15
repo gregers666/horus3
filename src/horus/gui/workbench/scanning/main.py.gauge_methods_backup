@@ -169,8 +169,8 @@ class ScanningWorkbench(Workbench):
 
     def _point_cloud_callback(self, range, progress, point_cloud):
         if range > 0:
-            self.gauge.SetRange(int(int(int(range))))
-            self.gauge.SetValue(int(int(int(progress))))
+            self.gauge.SetRange(int(range))
+            self.gauge.SetValue(progress)
         if point_cloud is not None:
             points, texture = point_cloud
             self.scene_view.append_point_cloud(points, texture)
@@ -244,7 +244,7 @@ class ScanningWorkbench(Workbench):
         self.pages_collection['view_page'].combo_video_views.Show()
         self.scene_view.create_default_object()
         self.scene_view.set_show_delete_menu(False)
-        self.gauge.SetValue(int(int(int(0))))
+        self.gauge.SetValue(0)
         self.gauge.Show()
         self.scene_panel.Layout()
         self.Layout()
@@ -252,7 +252,7 @@ class ScanningWorkbench(Workbench):
     def after_scan(self, response):
         ret, result = response
         if ret:
-            self.gauge.SetValue(int(int(int(self.gauge.GetRange()))))
+            self.gauge.SetValue(self.gauge.GetRange())
             dlg = wx.MessageDialog(self,
                                    _("Scanning has finished. If you want to save your "
                                      "point cloud go to \"File > Save model\""),
@@ -312,7 +312,7 @@ class ScanningWorkbench(Workbench):
         if profile.settings['current_panel_scanning'] == 'point_cloud_roi':
             self.scene_view._view_roi = profile.settings['use_roi']
             self.scene_view.queue_refresh()
-        self.gauge.SetValue(int(int(int(0))))
+        self.gauge.SetValue(0)
         self.gauge.Hide()
         self.scene_panel.Layout()
         self.Layout()

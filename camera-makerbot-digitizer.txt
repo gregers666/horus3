@@ -1,0 +1,11 @@
+Model Number	DMM-1118
+Brand Name	None
+origin	Taiwan
+CMOS SXGA sensor for high quality image and low power consumption *High speed USB 2.0 interface for high resolution PC camera interface 
+*Active pixel technology for sharp image and accurate color reproduction *Auto exposure, auto gain control and auto white balance for optimum image 
+*Superior low light performance – ideal for any lighting condition *Super small outline and thin profile for embedded applications 
+*High frame rate– deliver 15 fps in SXGA resolution and 30 fps in VGA 
+*Software controllable parameters (resolution, color, brightness, saturation) *High quality lens for true to life undistorted color image 
+*Bus powered with low power consumption – ideal for portable equipment 
+*UVC for use in Windows XP SP2 or above. 
+*Camera with UVC

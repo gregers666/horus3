@@ -43,7 +43,7 @@ class Page(wx.Panel):
         vbox.Add(self.gauge, 0, wx.ALL | wx.EXPAND, 10)
         self.panel.SetSizer(self.panel_box)
         vbox.Add(button_panel, 0, wx.ALL | wx.EXPAND, 1)
-        hbox.Add(self.left_button, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 8)
+        hbox.Add(self.left_button, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT, 8)
         hbox.Add((0, 0), 1, wx.EXPAND)
         hbox.Add(self.right_button, 0, wx.ALL | wx.EXPAND, 8)
         button_panel.SetSizer(hbox)

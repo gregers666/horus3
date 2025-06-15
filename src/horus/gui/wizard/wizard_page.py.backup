@@ -85,7 +85,7 @@ class Breadcrumbs(wx.Panel):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         for page in self.pages:
             title = wx.StaticText(self, label=page.title)
-            title.SetCursor(wx.Cursor(wx.CURSOR_HAND))
+            title.SetCursor(wx.StockCursor(wx.CURSOR_HAND))
             if self.GetParent().title == page.title:
                 title_font = title.GetFont()
                 title_font.SetWeight(wx.BOLD)

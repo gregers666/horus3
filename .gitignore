@@ -1,0 +1,42 @@
+# === Pliki kompilowane Pythona ===
+__pycache__/
+*.py[cod]
+*$py.class
+
+# === Środowiska wirtualne ===
+venv/
+.env/
+.env.bak/
+env/
+.venv/
+
+# === Pliki dzienników ===
+*.log
+
+# === Wyjścia kompilacji / build systemy ===
+build/
+dist/
+*.egg-info/
+
+# === Konfiguracje edytorów ===
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# === Test coverage ===
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# === Pliki tymczasowe i kopie zapasowe ===
+*.bak
+*.tmp
+*.swp
+*.DS_Store
+Thumbs.db
+
+# === Ignorowanie danych użytkownika ===
+*.local.json
+

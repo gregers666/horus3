@@ -48,7 +48,7 @@ class WelcomeDialog(wx.Dialog):
         self.ShowModal()
 
     def on_check_box_changed(self, event):
-        profile.settings['show_welcome'] = not event.Checked()
+        profile.settings['show_welcome'] = not event.IsChecked()
 
     def on_close(self, event):
         self.EndModal(wx.ID_OK)

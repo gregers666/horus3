@@ -118,14 +118,14 @@ class CalibrationPage(WizardPage):
         self.skip_button.Disable()
         self.next_button.Disable()
         self.enable_next = False
-        self.gauge.SetValue(int(0))
+        self.gauge.SetValue(0)
         self.result_label.Hide()
         self.gauge.Show()
         self.Layout()
         self.wait_cursor = wx.BusyCursor()
 
     def progress_calibration(self, progress):
-        self.gauge.SetValue(int(progress))
+        self.gauge.SetValue(progress)
 
     def after_calibration(self, response):
         ret, result = response
@@ -162,7 +162,7 @@ class CalibrationPage(WizardPage):
             self.skip_button.Enable()
             self.on_finish_calibration()
 
-        self.gauge.SetValue(int(100))
+        self.gauge.SetValue(100)
 
         if ret:
             self.skip_button.Disable()
@@ -202,7 +202,7 @@ class CalibrationPage(WizardPage):
             driver.board.lasers_off()
         else:
             self.video_view.stop()
-            self.gauge.SetValue(int(0))
+            self.gauge.SetValue(0)
             self.gauge.Show()
             self.prev_button.Enable()
             self.skip_button.Disable()

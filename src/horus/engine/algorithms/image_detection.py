@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This file is part of the Horus Project
 
@@ -7,6 +8,8 @@ __license__ = 'GNU General Public License v2 http://www.gnu.org/licenses/gpl2.ht
 
 import cv2
 import numpy as np
+from scipy.optimize import least_squares
+import warnings
 
 from horus import Singleton
 from horus.engine.calibration.pattern import Pattern
@@ -20,64 +23,90 @@ class ImageDetection(object):
         self.pattern = Pattern()
         self.calibration_data = CalibrationData()
 
-        self._criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
+        # Ulepszone kryteria zbieżności
+        self._criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 50, 0.0001)
+        
+        # Nowe parametry dla lepszej detekcji
+        self.preprocessing_enabled = True
+        self.adaptive_threshold = True
+        self.morphological_cleanup = True
+        self.subpixel_refinement = True
+        self.outlier_detection = True
+        self.pose_validation = True
+        
+        # Parametry filtracji
+        self.min_pattern_area = 100  # minimalna powierzchnia wzorca w pikselach^2
+        self.max_pattern_area = 500000  # maksymalna powierzchnia wzorca
+        self.corner_quality_threshold = 0.01
+        self.reprojection_error_threshold = 2.0  # piksele
+
+    def set_preprocessing(self, enabled):
+        self.preprocessing_enabled = enabled
+
+    def set_adaptive_threshold(self, enabled):
+        self.adaptive_threshold = enabled
+
+    def set_subpixel_refinement(self, enabled):
+        self.subpixel_refinement = enabled
+
+    def set_outlier_detection(self, enabled):
+        self.outlier_detection = enabled
 
     def detect_pattern(self, image):
-        corners = self._detect_chessboard(image)
-        if corners is not None:
-            image = self.draw_pattern(image, corners)
-        return image
+        """Ulepszone wykrywanie wzorca z lepszą wizualizacją"""
+        if image is None:
+            return None
+            
+        try:
+            corners = self._detect_chessboard(image)
+            if corners is not None:
+                # Walidacja corners
+                if self._validate_corners(corners, image.shape[:2]):
+                    image_with_pattern = self.draw_pattern(image, corners)
+                    return image_with_pattern
+                else:
+                    print("Detected corners failed validation")
+            return image
+            
+        except Exception as e:
+            print(f"Error in detect_pattern: {e}")
+            return image
 
     def draw_pattern(self, image, corners):
-        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        cv2.drawChessboardCorners(
-            image, (self.pattern.columns, self.pattern.rows), corners, True)
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        return image
-
-    def detect_corners(self, image):
-        corners = self._detect_chessboard(image)
-        return corners
-
-    def detect_pose(self, image):
-        corners = self._detect_chessboard(image)
-        if corners is not None:
-            ret, rvecs, tvecs = cv2.solvePnP(
-                self.pattern.object_points, corners,
-                self.calibration_data.camera_matrix, self.calibration_data.distortion_vector)
-            if ret:
-                return (cv2.Rodrigues(rvecs)[0], tvecs, corners)
-
-    def detect_pattern_plane(self, pose):
-        if pose is not None:
-            R = pose[0]
-            t = pose[1].T[0]
-            c = pose[2]
-            n = R.T[2]
-            d = np.dot(n, t)
-            return (d, n, c)
-
-    def pattern_mask(self, image, corners):
-        if image is not None:
-            h, w, d = image.shape
-            if corners is not None:
-                corners = corners.astype(np.int)
-                p1 = corners[0][0]
-                p2 = corners[self.pattern.columns - 1][0]
-                p3 = corners[self.pattern.columns * (self.pattern.rows - 1)][0]
-                p4 = corners[self.pattern.columns * self.pattern.rows - 1][0]
-                mask = np.zeros((h, w), np.uint8)
-                points = np.array([p1, p2, p4, p3])
-                cv2.fillConvexPoly(mask, points, 255)
-                image = cv2.bitwise_and(image, image, mask=mask)
-        return image
-
-    def _detect_chessboard(self, image):
-        if image is not None:
-            if self.pattern.rows > 2 and self.pattern.columns > 2:
-                gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-                ret, corners = cv2.findChessboardCorners(
-                    gray, (self.pattern.columns, self.pattern.rows), flags=cv2.CALIB_CB_FAST_CHECK)
-                if ret:
-                    cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), self._criteria)
-                    return corners
+        """Ulepszone rysowanie wzorca z lepszymi kolorami i grubością linii"""
+        if image is None or corners is None:
+            return image
+            
+        try:
+            # Konwersja kolorów dla lepszej wizualizacji
+            if len(image.shape) == 3:
+                display_image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            else:
+                display_image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+            
+            # Adaptacyjna grubość linii na podstawie rozmiaru obrazu
+            line_thickness = max(1, min(image.shape[:2]) // 200)
+            
+            # Rysuj szachownicę z lepszymi parametrami
+            pattern_found = cv2.drawChessboardCorners(
+                display_image, 
+                (self.pattern.columns, self.pattern.rows), 
+                corners, 
+                True
+            )
+            
+            if pattern_found:
+                # Dodaj informacje o jakości wykrycia
+                self._draw_pattern_info(display_image, corners)
+            
+            # Konwersja z powrotem
+            if len(image.shape) == 3:
+                result = cv2.cvtColor(display_image, cv2.COLOR_BGR2RGB)
+            else:
+                result = cv2.cvtColor(display_image, cv2.COLOR_BGR2GRAY)
+                
+            return result
+            
+        except Exception as e:
+            print(f"Error in draw_pattern: {e}")
+            return image

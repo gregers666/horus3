@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This file is part of the Horus Project
 
@@ -16,6 +17,9 @@ from wx import glcanvas
 import OpenGL
 OpenGL.ERROR_CHECKING = False
 from OpenGL.GL import *
+
+# OpenGL global disable flag
+from .opengl_config import DISABLE_OPENGL, DEBUG_OPENGL, safe_gl_check
 
 
 class animation(object):
@@ -108,7 +112,7 @@ class glGuiContainer(glGuiControl):
 
     def on_mouse_down(self, x, y, button):
         for ctrl in self._gl_gui_control_list:
-            if ctrl.on_mouse_down(x, y, button):
+            if hasattr(ctrl, 'on_mouse_down') and ctrl.on_mouse_down(x, y, button):
                 return True
         return False
 
@@ -121,13 +125,14 @@ class glGuiContainer(glGuiControl):
     def on_mouse_motion(self, x, y):
         handled = False
         for ctrl in self._gl_gui_control_list:
-            if ctrl.on_mouse_motion(x, y):
+            if hasattr(ctrl, 'on_mouse_motion') and ctrl.on_mouse_motion(x, y):
                 handled = True
         return handled
 
     def draw(self):
         for ctrl in self._gl_gui_control_list:
-            ctrl.draw()
+            if hasattr(ctrl, 'draw'):
+                ctrl.draw()
 
     def update_layout(self):
         for ctrl in self._gl_gui_control_list:
@@ -145,16 +150,30 @@ class glGuiPanel(glcanvas.GLCanvas):
         self._container = None
         self._container = glGuiContainer(self, (0, 0))
         self._shown_error = False
+        self._context_ready = False
 
-        self._context = glcanvas.GLContext(self)
+        # Tworzenie kontekstu OpenGL
+        try:
+            if not DISABLE_OPENGL:
+                self._context = glcanvas.GLContext(self)
+                if DEBUG_OPENGL:
+                    print(f"🔧 OpenGL kontekst utworzony: {self._context}")
+            else:
+                self._context = None
+                if DEBUG_OPENGL:
+                    print("OpenGL wyłączony - nie tworzę kontekstu")
+        except Exception as e:
+            if DEBUG_OPENGL:
+                print(f"❌ Błąd tworzenia kontekstu OpenGL: {e}")
+            self._context = None
+        
         self._button_size = 64
-
         self._animation_list = []
         self.gl_release_list = []
         self._refresh_queued = False
         self._idle_called = False
 
-#old     wx.EVT_PAINT(self, self._on_gui_paint)
+        # Bind events
         self.Bind(wx.EVT_PAINT, self._on_gui_paint)
         self.Bind(wx.EVT_SIZE, self._on_size)
         self.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
@@ -173,6 +192,53 @@ class glGuiPanel(glcanvas.GLCanvas):
         self.Bind(wx.EVT_KILL_FOCUS, self._on_focus_lost)
         self.Bind(wx.EVT_IDLE, self._on_idle)
 
+    def activate_context(self):
+        """Bezpiecznie aktywuje kontekst OpenGL"""
+        if DISABLE_OPENGL:
+            if DEBUG_OPENGL:
+                print("OpenGL wyłączony - pomijanie aktywacji kontekstu")
+            return False
+            
+        try:
+            if self._context and self.IsShownOnScreen():
+                # Zawsze ustaw kontekst przed sprawdzeniem
+                self.SetCurrent(self._context)
+                
+                # Sprawdź czy kontekst faktycznie działa
+                if safe_gl_check():
+                    self._context_ready = True
+                    if DEBUG_OPENGL:
+                        print("✅ Kontekst OpenGL aktywny")
+                    return True
+                else:
+                    if DEBUG_OPENGL:
+                        print("⚠️ Kontekst OpenGL nie jest gotowy po SetCurrent")
+                    return False
+                        
+            else:
+                if DEBUG_OPENGL:
+                    print("❌ Nie można aktywować kontekstu OpenGL - okno niewidoczne lub brak kontekstu")
+                return False
+        except Exception as e:
+            if DEBUG_OPENGL:
+                print(f"❌ Błąd aktywacji kontekstu: {e}")
+            return False
+
+    def ensure_current_context(self):
+        """Zapewnia że kontekst jest aktywny - wywoływane przed operacjami GL"""
+        if DISABLE_OPENGL:
+            return False
+            
+        try:
+            if self._context and self.IsShownOnScreen():
+                self.SetCurrent(self._context)
+                return True
+            return False
+        except Exception as e:
+            if DEBUG_OPENGL:
+                print(f"Błąd ensure_current_context: {e}")
+            return False
+
     def _on_idle(self, e):
         self._idle_called = True
         if len(self._animation_list) > 0 or self._refresh_queued:
@@ -184,17 +250,21 @@ class glGuiPanel(glcanvas.GLCanvas):
 
     def _on_gui_key_up(self, e):
         if self._focus is not None:
-            self._focus.on_key_up(e.GetKeyCode())
+            if hasattr(self._focus, 'on_key_up'):
+                self._focus.on_key_up(e.GetKeyCode())
             self.Refresh()
         else:
-            self.on_key_up(e.GetKeyCode())
+            if hasattr(self, 'on_key_up'):
+                self.on_key_up(e.GetKeyCode())
 
     def _on_gui_key_down(self, e):
         if self._focus is not None:
-            self._focus.on_key_down(e.GetKeyCode())
+            if hasattr(self._focus, 'on_key_down'):
+                self._focus.on_key_down(e.GetKeyCode())
             self.Refresh()
         else:
-            self.on_key_down(e.GetKeyCode())
+            if hasattr(self, 'on_key_down'):
+                self.on_key_down(e.GetKeyCode())
 
     def _on_focus_lost(self, e):
         self._focus = None
@@ -205,31 +275,52 @@ class glGuiPanel(glcanvas.GLCanvas):
         if self._container.on_mouse_down(e.GetX(), e.GetY(), e.GetButton()):
             self.Refresh()
             return
-        self.on_mouse_down(e)
+        if hasattr(self, 'on_mouse_down'):
+            self.on_mouse_down(e)
 
     def _on_gui_mouse_up(self, e):
         if self._container.on_mouse_up(e.GetX(), e.GetY()):
             self.Refresh()
             return
-        self.on_mouse_up(e)
+        if hasattr(self, 'on_mouse_up'):
+            self.on_mouse_up(e)
 
     def _on_gui_mouse_motion(self, e):
         self.Refresh()
         if not self._container.on_mouse_motion(e.GetX(), e.GetY()):
-            self.on_mouse_motion(e)
+            if hasattr(self, 'on_mouse_motion'):
+                self.on_mouse_motion(e)
 
     def _on_gui_paint(self, e):
         wx.PaintDC(self)
+        
+        # Sprawdź czy OpenGL jest wyłączony
+        if DISABLE_OPENGL:
+            if DEBUG_OPENGL:
+                print("OpenGL wyłączony - pomijanie renderowania")
+            return
+            
         try:
-            self.SetCurrent(self._context)
+            if not self.activate_context():
+                return
+                
+            # Bezpieczne zwalnianie obiektów GL
             for obj in self.gl_release_list:
-                obj.release()
+                try:
+                    if hasattr(obj, 'release'):
+                        obj.release()
+                except Exception as e:
+                    if DEBUG_OPENGL:
+                        print(f"Błąd zwalniania obiektu GL: {e}")
             del self.gl_release_list[:]
-            self.on_paint(e)
+            
+            if hasattr(self, 'on_paint'):
+                self.on_paint(e)
             self._draw_gui()
             glFlush()
             self.SwapBuffers()
-        except:
+            
+        except Exception as ex:
             # When an exception happens, catch it and show a message box.
             # If the exception is not caught the draw function bugs out.
             # Only show this exception once so we do not overload the user with popups.
@@ -247,31 +338,37 @@ class glGuiPanel(glcanvas.GLCanvas):
                 self._shown_error = True
 
     def _draw_gui(self):
-        # if self._glButtonsTexture is None:
-        # self._glButtonsTexture = opengl_helpers.load_gl_texture('glButtons.png')
+        if DISABLE_OPENGL:
+            return
+            
+        try:
+            glDisable(GL_DEPTH_TEST)
+            glEnable(GL_BLEND)
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+            glDisable(GL_LIGHTING)
+            glColor4ub(255, 255, 255, 255)
 
-        glDisable(GL_DEPTH_TEST)
-        glEnable(GL_BLEND)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-        glDisable(GL_LIGHTING)
-        glColor4ub(255, 255, 255, 255)
+            glMatrixMode(GL_PROJECTION)
+            glLoadIdentity()
+            size = self.GetSize()
+            if size.GetWidth() > 0 and size.GetHeight() > 0:
+                glOrtho(0, size.GetWidth() - 1, size.GetHeight() - 1, 0, -1000.0, 1000.0)
+                glMatrixMode(GL_MODELVIEW)
+                glLoadIdentity()
 
-        glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()
-        size = self.GetSize()
-        glOrtho(0, size.GetWidth() - 1, size.GetHeight() - 1, 0, -1000.0, 1000.0)
-        glMatrixMode(GL_MODELVIEW)
-        glLoadIdentity()
-
-        self._container.draw()
+                self._container.draw()
+        except Exception as e:
+            if DEBUG_OPENGL:
+                print(f"Błąd rysowania GUI: {e}")
 
     def _on_erase_background(self, event):
         # Workaround for windows background redraw flicker.
         pass
 
     def _on_size(self, e):
-        self._container.set_size(0, 0, self.GetSize().GetWidth(), self.GetSize().GetHeight())
-        self._container.update_layout()
+        if self._container:
+            self._container.set_size(0, 0, self.GetSize().GetWidth(), self.GetSize().GetHeight())
+            self._container.update_layout()
         self.Refresh()
 
     def on_mouse_down(self, e):

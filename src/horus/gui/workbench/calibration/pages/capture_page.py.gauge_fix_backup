@@ -60,14 +60,14 @@ class CapturePage(Page):
               "click over the video panel and press "
               "space bar to perform the captures."))
         self.current_grid = 0
-        self.gauge.SetValue(int(0))
+        self.gauge.SetValue(0)
         camera_intrinsics.reset()
         for panel in range(self.rows * self.columns):
             self.panel_grid[panel].SetBackgroundColour((221, 221, 221))
             self.panel_grid[panel].set_image(wx.Image(resources.get_path_for_image("void.png")))
 
     def play(self):
-        self.gauge.SetValue(int(0))
+        self.gauge.SetValue(0)
         self.video_view.play()
         self.image_grid_panel.SetFocus()
         self.GetParent().Layout()
@@ -92,7 +92,7 @@ class CapturePage(Page):
             if image is not None:
                 self.add_frame_to_grid(image)
                 if self.current_grid <= self.rows * self.columns:
-                    self.gauge.SetValue(int(self.current_grid * 100.0 / self.rows / self.columns))
+                    self.gauge.SetValue(self.current_grid * 100.0 / self.rows / self.columns)
             self.video_view.play()
 
     def add_frame_to_grid(self, image):

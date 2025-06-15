@@ -132,7 +132,7 @@ class PreferencesDialog(wx.Dialog):
             hbox = wx.BoxSizer(wx.HORIZONTAL)
             hbox.Add(self.upload_firmware_button, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 10)
             hbox.AddStretchSpacer()
-            hbox.Add(self.clear_check_box, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+            hbox.Add(self.clear_check_box, 0, wx.ALIGN_CENTER_VERTICAL)
             vbox.Add(hbox, 0, wx.ALL | wx.EXPAND, 10)
 
             vbox.Add(self.gauge, 0, wx.EXPAND | wx.ALL ^ wx.TOP, 10)
@@ -166,7 +166,8 @@ class PreferencesDialog(wx.Dialog):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(label, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 10)
         hbox.AddStretchSpacer()
-        hbox.Add(combo, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.AddStretchSpacer()
+        hbox.Add(combo, 0, wx.ALIGN_CENTER_VERTICAL)
         vbox.Add(hbox, 0, wx.ALL | wx.EXPAND, 10)
 
     def on_hex_combo_changed(self, event):
@@ -249,7 +250,7 @@ class PreferencesDialog(wx.Dialog):
         self.enable_firmware_section(False)
         self.cancel_button.Disable()
         self.save_button.Disable()
-        self.gauge.SetValue(0)
+        self.gauge.SetValue(int(0))
         self.gauge.Show()
         self.wait_cursor = wx.BusyCursor()
         self.GetSizer().Layout()

@@ -1,3 +1,9 @@
 piglet
 wxPython>4.2
-
+opencv-python
+PyOpenGL
+PyOpenGL_accelerate
+pyserial
+scipy
+matplotlib
+scikit-learn

@@ -61,7 +61,7 @@ class MachineSettingsDialog(wx.Dialog):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(self.machineShapeLabel, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 10)
         hbox.AddStretchSpacer()
-        hbox.Add(self.machineShapeCombo, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(self.machineShapeCombo, 0, wx.ALIGN_CENTER_VERTICAL)
         vbox.Add(hbox, 0, wx.ALL | wx.EXPAND, 10)
         vbox.Add(wx.StaticLine(self), 0, wx.EXPAND | wx.ALL, 5)
 
@@ -70,25 +70,25 @@ class MachineSettingsDialog(wx.Dialog):
         self.diam_hbox = wx.BoxSizer(wx.HORIZONTAL)
         self.diam_hbox.Add(self.diameterLabel, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 10)
         self.diam_hbox.AddStretchSpacer()
-        self.diam_hbox.Add(self.diameterField, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        self.diam_hbox.Add(self.diameterField, 0, wx.ALIGN_CENTER_VERTICAL)
         vbox.Add(self.diam_hbox, 0, wx.ALL | wx.EXPAND, 10)
         # Width
         self.width_hbox = wx.BoxSizer(wx.HORIZONTAL)
         self.width_hbox.Add(self.widthLabel, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 10)
         self.width_hbox.AddStretchSpacer()
-        self.width_hbox.Add(self.widthField, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        self.width_hbox.Add(self.widthField, 0, wx.ALIGN_CENTER_VERTICAL)
         vbox.Add(self.width_hbox, 0, wx.ALL | wx.EXPAND, 10)
         # Height
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(self.heightLabel, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 10)
         hbox.AddStretchSpacer()
-        hbox.Add(self.heightField, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(self.heightField, 0, wx.ALIGN_CENTER_VERTICAL)
         vbox.Add(hbox, 0, wx.BOTTOM | wx.LEFT | wx.RIGHT | wx.EXPAND, 10)
         # Depth
         self.depth_hbox = wx.BoxSizer(wx.HORIZONTAL)
         self.depth_hbox.Add(self.depthLabel, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 10)
         self.depth_hbox.AddStretchSpacer()
-        self.depth_hbox.Add(self.depthField, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        self.depth_hbox.Add(self.depthField, 0, wx.ALIGN_CENTER_VERTICAL)
         vbox.Add(self.depth_hbox, 0, wx.BOTTOM | wx.LEFT | wx.RIGHT | wx.EXPAND, 10)
         vbox.Add(wx.StaticLine(self), 0, wx.EXPAND | wx.ALL, 5)
 
@@ -97,7 +97,7 @@ class MachineSettingsDialog(wx.Dialog):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(self.machineModelButton, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 10)
         hbox.AddStretchSpacer()
-        hbox.Add(self.machineModelField, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(self.machineModelField, 0, wx.ALIGN_CENTER_VERTICAL)
         vbox.Add(hbox, 0, wx.ALL | wx.EXPAND, 10)
         vbox.Add(wx.StaticLine(self), 0, wx.EXPAND | wx.ALL, 5)
 
